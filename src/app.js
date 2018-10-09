@@ -1,45 +1,66 @@
-//File that contains our code 
-//babel src/app.js --out-file=public/scripts/app.js --presets=env,react --watch 
+class IndecisionApp extends React.Component{
+	render() {
+		const title = "Indecision";
+		const subtitle = "Put your life in the hands of a computer";
+		const options = ['Thing one','Thing two','Thing three'];
+		return (
+				<div>					
+					<Header title={title} subtitle={subtitle}/>
+					<Action options={options}/>
+					<Options />
+					<AddOption />	
+				</div>
+			);
+	}
 
-const template = <div> <h1> hello </h1> <p>This is JSX from app.js </p> </div>;
-
-const obj = {
-	
-	user:'Nikhil',
-	age: 20,
-	location: 'New Delhi'
 }
 
+class Header extends React.Component{
+	render (){
+		return (
+			<div>
+				<h1>{this.props.title}</h1>
+				<h2>{this.props.subtitle}</h2>
+			</div>
+			);
+		}
+}
 
-const app = {
-	title: 'Indecision App', 
-	options: ['one','two']
-
-};
-
-function getLocation(location){
-	if (location) 
-	{
-		return <p>Location : {location}</p>;
+class Action extends React.Component{
+	render(){
+		return (
+			<div>
+				{
+					this.props.options.map((option)=><Options key={option} optiontext={option}/>)
+				}
+				<button>Click here</button>
+			</div>
+			);
 	}
 }
 
-const template2 = (
-	<div>
-		<h1>{obj.user ? obj.user : 'Anonymous'}</h1>
-		{(obj.age && obj.age >= 18) && <p>Age: {obj.age}</p>}
-		{getLocation(obj.location)}
-	</div>
-	);
-
-const template3 = (
-	<div>
-		<h1>{app.title}</h1>
-		{app.subtitle && <p>{app.subtitle}</p>}
-		{app.options.length > 0 && (<ol> <li>{app.options[0]}</li> <li>{app.options[1]}</li></ol>)}
-	</div>
-	);
+class Options extends React.Component{
+	render(){
+		return (
+			<div>
+				{this.props.optiontext}
+			</div>
+			);
+	}
+}
 
 
-const appRoot = document.getElementById('app');
-ReactDOM.render(template3,appRoot);
+class AddOption extends React.Component{
+	render(){
+		return (
+			<div>
+				<form>
+					<input type="text" name="option"/>
+					<input type="submit" name="submit"/>
+				</form>
+			</div>
+			);
+	}
+}
+
+ReactDOM.render(<IndecisionApp />,document.getElementById('app'));
